@@ -1,1 +1,1 @@
-# patterns-dev-journal-
+# patterns-dev-journal
