@@ -81,15 +81,175 @@ With these techniques, **CSR** can help to provide a faster **Single-Page Applic
 
 ---
 
-## Day 2 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 2 – Server-Side Rendering (SSR)
+**📅 Date:** 2025-09-02  
+**📂 Category:** Rendering
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary 
+
+**💡 Problem It Solves:**  
+- Before SSR, most dynamic applications required JavaScript to run in the browser before showing useful content (CSR).  
+- SSR solves the **blank page problem** (empty `<div id="root"></div>` until JS loads).  
+- It improves **performance for the first render** and ensures better **SEO** since search engine crawlers can index pre-rendered HTML.
+
+**Example (Patterns.dev):**  
+```html
+<html>
+   <head>
+       <title>Time</title>
+   </head>
+   <body>
+       <div>
+       <h1>Hello, world!</h1>
+       <b>It is <div id=currentTime></div></b>
+       </div>
+   </body>
+</html>
+```
+
+```javascript
+function tick() {
+    var d = new Date();
+    var n = d.toLocaleTimeString();
+    document.getElementById("currentTime").innerHTML = n;
+}
+setInterval(tick, 1000);
+```
+
+**🌎 Real-world analogy:**
+Think of SSR like ordering food at a restaurant:
+- 🍽️ The kitchen (server) prepares a complete dish (HTML) before serving.
+- 🧑‍🍳 By the time it reaches you (browser), it’s ready to eat immediately.
+- CSR, in contrast, would be like the restaurant delivering raw ingredients and a recipe for you to cook yourself.
+
+**✅ Pros & Cons ❌:**
+
+**✅ Pros:**
+Executing the rendering code on the server and reducing JavaScript offers the following advantages: 
+
+1. **Better First Contentful Paint (FCP) & Time to Interactive (TTI):** 
+- Less JavaScript required upfront.
+- Users see meaningful content faster.
+
+2. **Improved SEO:** 
+- Crawlers index pre-rendered HTML without extra workarounds.
+
+3. **Reduced JavaScript Budget Pressure:**
+- Since rendering happens server-side, less client-side JS is needed.
+
+**❌ Cons:** 
+SSR works great for static content due to the above advantages. However, it does have a few disadvantages because of which it is not perfect for all scenarios.
+
+1. **Slower Time To First Byte (TTFB)**
+- Since all processing takes place on the server, the response from the server may be delayed in case of one or more of the following scenarios:
+  - Multiple simultaneous users causing excess load on the server.
+  - Slow network.
+  - Server code not optimized.
+
+2. **Full page reloads required for some interactions:**
+- Since all code is not available on the client, frequent round trips to the server are required for all key operations causing full page reloads. 
+- This could increase the time between interactions as users are required to wait longer between operations.
+- A single-page application is thus not possible with SSR.
+
+To address these drawbacks, **modern frameworks** and **libraries** allow **rendering** on both **server** and **client** for the same application. See below for more details. 
+
+**🧮 Working with Frameworks:**
+1. SSR with Next.js
+- The **Next.js framework** also supports **SSR**. This pre-renders a page on the server on every request. It can be accomplished by exporting an **async function** called **getServerSideProps()** from a page as follows.
+
+```javascript
+export async function getServerSideProps(context) {
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
+```
+- The **context object** contains keys for HTTP request and response objects, routing parameters, querystring, locale, etc.
+
+The following implementation shows the use of getServerSideProps() for rendering data on a page formatted using React.
+
+```javascript
+// data fetched from an external data source using `getServerSideProps`
+
+const Users = ({ users, error }) => {
+ return (
+   <section>
+     <header>
+       <h1>List of users</h1>
+     </header>
+     {error && <div>There was an error.</div>}
+     {!error && users && (
+       <table>
+         <thead>
+           <tr>
+             <th>Username</th>
+             <th>Email</th>
+             <th>Name</th>
+           </tr>
+         </thead>
+         <tbody>
+           {users.map((user, key) => (
+             <tr key={key}>
+               <td>{user.username}</td>
+               <td>{user.email}</td>
+               <td>{user.name}</td>
+             </tr>
+           ))}
+         </tbody>
+       </table>
+     )}
+   </section>
+ );
+};
+
+export async function getServerSideProps() {
+ // Fetch data from external API
+ const res = await fetch("https://jsonplaceholder.typicode.com/users")
+ const data = await res.json();
+
+ // Pass data to the page via props
+ return { props: { data } }
+}
+
+export default Users;
+```
+
+2. React for the Server
+- React can be rendered **isomorphically**, which means that it can function both on the **browser** as well as other platforms like the **server**. Thus, UI elements may be rendered on the server using React.
+- React can also be used with **universal code** which will allow the same code to run in **multiple environments**. This is made possible by using **Node.js** on the server or what is known as a Node server. Thus, universal JavaScript may be used to fetch data on the server and then render it using isomorphic React.
+
+React functions that make this possible include:
+```javascript
+ReactDOMServer.renderToString(element);
+```
+
+This function returns an HTML string corresponding to the React element. The HTML can then be rendered to the client for a faster page load.
+- The **renderToString()** function may be used with **ReactDOM.hydrate()**. This will ensure that the rendered HTML is preserved as-is on the client and only the event handlers attached after load.
+- To implement this, we use a .js file on both client and server corresponding to every page. The .js file on the server will render the HTML content, and the .js file on the client will hydrate it.
+
+**Example:**
+- Assume you have a React element called **App** which contains the HTML to be rendered defined in the universal **app.js** file. Both the server and client-side React can recognize the **App** element. 
+- The **ipage.js** file on the server can have the code:
+
+```javascript
+app.get("/", (req, res) => {
+  const app = ReactDOMServer.renderToString(<App />);
+});
+```
+
+The constant **App** can now be used to generate the HTML to be rendered. The **ipage.js** on the client side will have the following to ensure that the element **App** is hydrated.
+
+```javascript
+ReactDOM.hydrate(<App />, document.getElementById("root"));
+```
+
+A complete example of SSR with React can be found [here](https://www.digitalocean.com/community/tutorials/react-server-side-rendering).
+
+**🎯 Final Takeaways (Day 2)**
+- SSR ensures **faster initial load** and **SEO-friendliness**.
+- Best for **content-heavy sites**(blogs, e-commerce, news portals).
+- Less ideal for **highly interactive apps** unless combined with **CSR** or **hydration**.
+- Modern frameworks (Next.js, Nuxt, Angular Universal) often **blend SSR** + **CSR** to get the best of both worlds.
 
 ---
 
