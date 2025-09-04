@@ -253,15 +253,152 @@ A complete example of SSR with React can be found [here](https://www.digitalocea
 
 ---
 
-## Day 3 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 3 – Static Rendering (SSG)  
+**📅 Date:** 2025-09-03  
+**📂 Category:** Rendering  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+---
+
+### 📖 Pattern Summary  
+**Static Rendering** (also called **Static Site Generation – SSG**) pre-builds HTML at **build time**, so users get fully rendered content right away. Unlike CSR or SSR:  
+
+- ⚡️ **CSR** delays first paint while waiting for JavaScript to run.  
+- 🖥️ **SSR** makes the server render every request, which increases **TTFB** (Time to First Byte).  
+- 📦 **SSG** strikes a balance: pages are generated once at build time and served instantly on request.  
+
+---
+
+### 💡 Problem It Solves  
+- ⏳ Avoids **slow TTFB** of **SSR**.  
+- 🚫 Avoids **heavy JavaScript bundles** of **CSR**.  
+- ✅ Offers **fast FCP/LCP/TTI** by delivering ready-to-use HTML.  
+
+SSG is especially powerful for:  
+- Static content like **About** / **Contact** pages.  
+- Content-heavy apps like **blogs** and **product catalogs**.  
+
+---
+
+### 🛠 Example (Next.js without data)  
+```javascript
+// pages/about.js
+export default function About() {
+  return (
+    <div>
+      <h1>About Us</h1>
+      {/* ... */}
+    </div>
+  );
+}
+```
+
+📌 When you run **next build**, this page becomes a static **about.html** served instantly at **/about**.
+
+**📊 SSG with Data**
+- For dynamic content (blogs, product pages, etc.):
+- Use **getStaticProps()** at build time to fetch and pre-render data.
+- Each item can also have its own static page with **getStaticPaths().**
+
+**🌎 Real-world analogy:**
+- Think of SSG like printing a book 📖:
+  - **🖨️ SSG (pre-printed book):** Content is ready before anyone buys it. Super fast to deliver, but if you need changes, you must reprint the book.
+  - **🏭 SSR (print-on-demand):** Each book is printed as the customer orders — flexible but slower.
+  - **✍️ CSR (blank notebook):** Customers get blank pages and instructions; they must “build” the book themselves in the browser.
+
+- Code examples:
+  - **Example 1: Product Listing Example - All Items**
+    - Generation of a listing page is a scenario where the content to be displayed on the page depends on external data.
+    - This data will be fetched from the database at build time to construct the page. 
+    - In **Next.js** this can be achieved by exporting the function **getStaticProps()** in the page component.
+    - The function is called at build time on the build server to fetch the data.
+    - The data can then be passed to the page’s **props** to pre-render the page component.
+
+```javascript
+// This function runs at build time on the build server
+export async function getStaticProps() {
+  return {
+    props: {
+      products: await getProductsFromDatabase(),
+    },
+  };
+}
+
+// The page component receives products prop from getStaticProps at build time
+export default function Products({ products }) {
+  return (
+    <>
+      <h1>Products</h1>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+- Note: The function will not be included in the client-side JS bundle and hence can even be used to fetch the data directly from a database.
+
+  - **Example 2: Individual Product Details Page - Per Item**
+    - In the previous example above, we could have an individual detailed page for each of the products listed on the listing page.
+    - These pages could be accessed by clicking on the corresponding items on the listing page or directly through some other route.
+      - For instance, assume we have products with **product ids** **101**, **102**, **103**, and so on. 
+      - We need their information to be available at routes **/products/101,** **/products/102,** **/products/103** etc. 
+      - To achieve this at build time in Next.js we can use the function **getStaticPaths()** in combination with [dynamic routes](https://nextjs.org/docs/routing/dynamic-routes).
+
+- For starters, we need to create a **common page component** **products/[id].js** for this and export the function **getStaticPaths()** in it.
+  - The function will return all possible product ids which can be used to pre-render individual product pages at build time.
+  - The following Next.js skeleton available [here](https://vercel.com/blog/nextjs-server-side-rendering-vs-static-generation#individual-product-page-static-generation-with-data) shows how to structure the code for this.
+
+```javascript
+// pages/products/[id].js
+
+// In getStaticPaths(), you need to return the list of
+// ids of product pages (/products/[id]) that you'd
+// like to pre-render at build time. To do so,
+// you can fetch all products from a database.
+export async function getStaticPaths() {
+  const products = await getProductsFromDatabase();
+
+  const paths = products.map((product) => ({
+    params: { id: product.id },
+  }));
+
+  // fallback: false means pages that don't have the correct id will 404.
+  return { paths, fallback: false };
+}
+
+// params will contain the id for each generated page.
+export async function getStaticProps({ params }) {
+  return {
+    props: {
+      product: await getProductFromDatabase(params.id),
+    },
+  };
+}
+
+export default function Product({ product }) {
+  // Render product
+}
+```
+
+**✅ Pros & Cons ❌:**
+
+**✅ Pros:**
+1. 🚀 Super-fast performance (pre-rendered HTML = instant response).
+2. 🔍 SEO-friendly (content visible without JS execution).
+3. 🌐 Works great with CDNs (edge caching = global speed).
+
+**❌ Cons:** 
+1. 📂 Potentially huge number of HTML files for large datasets.
+2. 🔄 Requires rebuild + redeploy whenever content changes.
+3. ⚠️ Not suitable for highly dynamic, real-time apps.
+
+🎯 Final Takeaways
+- **SSG** is the sweet spot for static-heavy content sites (blogs, portfolios, docs).
+- Blazing fast, SEO-friendly, and great for read-heavy apps.
+- But beware of stale content if updates happen often.
 
 ---
 
