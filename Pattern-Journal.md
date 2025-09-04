@@ -402,15 +402,128 @@ export default function Product({ product }) {
 
 ---
 
-## Day 4 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 4 – Incremental Static Generation
+**📅 Date:** 2025-09-04  
+**📂 Category:** Rendering
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary 
+
+**💡 Problem It Solves:**  
+- **Incremental Static Generation (iSSG)** was introduced as an **upgrade to Static Site Generation (SSG)** to overcome its main limitation: **dynamic, frequently updated data.**  
+- With iSSG, static sites can be updated **incrementally** without requiring a full rebuild by regenerating pages in the background as needed.
+
+---
+
+### ⚙️ How It Works  
+
+**1️⃣ Adding New Pages:**  
+- Uses lazy-loading for non-existent pages.  
+- On first request, the page is generated and served.  
+- While building, users may see a **fallback UI** (`Loading...`) instead of a 404.  
+
+```javascript
+// Next.js code required for lazy-loading the non-existent page with iSSG.
+// pages/products/[id].js
+
+// In getStaticPaths(), you need to return the list of
+// ids of product pages (/products/[id]) that you'd
+// like to pre-render at build time. To do so,
+// you can fetch all products from a database.
+export async function getStaticPaths() {
+  const products = await getProductsFromDatabase();
+
+  const paths = products.map((product) => ({
+     params: { id: product.id }
+  }));
+
+
+  // fallback: true means that the missing pages
+  // will not 404, and instead can render a fallback.
+  return { paths, fallback: true };
+}
+
+// params will contain the id for each generated page.
+export async function getStaticProps({ params }) {
+  return {
+    props: {
+      product: await getProductFromDatabase(params.id)
+    }
+  }
+}
+
+
+export default function Product({ product }) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
+  // Render product
+}
+```
+
+**2️⃣ Updating Existing Pages:**
+- Pages are **revalidated** in the background after a set time.
+- iSSG uses the [stale-while-revalidate](https://web.dev/stale-while-revalidate/) strategy where the user receives the cached or stale version while the revalidation takes place.
+- To make the previous example serve a relatively dynamic list of products, we will include the code to set the timeout for rebuilding the page (see below).
+
+```javascript
+// This function runs at build time on the build server
+export async function getStaticProps() {
+  return {
+    props: {
+      products: await getProductsFromDatabase(),
+      revalidate: 60, // This will force the page to revalidate after 60 seconds
+    }
+  }
+}
+
+// The page component receives products prop from getStaticProps at build time
+export default function Products({ products }) {
+  return (
+    <>
+      <h1>Products</h1>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </>
+  )
+}
+```
+
+**🌎 Real-world analogy:**
+- Think of a digital menu board at a restaurant 🍔:
+  - The board always shows something, even if the menu is being updated behind the scenes.
+  - If new dishes are added, they appear on-demand when someone first asks for them.
+  - Customers don’t experience downtime and the menu quietly stays up-to-date.
+
+**✅ Pros & Cons ❌:**
+
+**✅ Pros:**
+1. **Dynamic Data:**
+- Handles dynamic data without full rebuilds.
+
+2. **Speed:**
+- Fast, since regeneration happens in the background.
+
+3. **Availability:**
+- A fairly recent version of any page will always be available online for users to access. 
+- Even if the regeneration fails in the background, the old version remains unaltered.
+
+4. **Consistent:**
+- As the regeneration takes place on the server one page at a time, the load on the database and the backend is low and performance is consistent. 
+- As a result, there are no spikes in latency.
+
+5. **Ease of Distribution:**
+- Just like SSG sites, iSSG sites can also be distributed through a network of CDN’s used to serve pre-rendered web pages.
+
+**❌ Cons:** 
+- Initial requests for a new page may show a fallback until it’s generated.
+- Content can still be slightly stale, depending on revalidation timing.
+- More complex to set up compared to basic SSG.
 
 ---
 
