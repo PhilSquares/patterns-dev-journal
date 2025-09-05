@@ -527,15 +527,148 @@ export default function Products({ products }) {
 
 ---
 
-## Day 5 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 5 – Streaming Server-Side Rendering
+**📅 Date:** 2025-09-05  
+**📂 Category:** Rendering  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+
+**💡 Problem It Solves:**  
+- **Traditional SSR** waits for the entire HTML to be generated before sending it to the client. This can delay the **Time To First Byte (TTFB)** and slow down rendering.  
+- **Streaming SSR (with Node streams)** allows servers to send chunks of HTML to the client **as soon as they are ready**.  
+- The client can begin parsing and rendering while the server continues to send more chunks.  
+- In React, this is enabled through **renderToNodeStream** and **renderToStaticNodeStream**.  
+
+---
+
+### ⚡️ Example (from Patterns.dev)  
+
+**Scenario:** An app showing thousands of cat facts. Instead of waiting for all facts to render, we stream them to the client as they’re generated.
+```javascript
+// server.js
+
+import React from "react";
+import path from "path";
+import express from "express";
+import { renderToNodeStream } from "react-dom/server";
+
+import App from "./src/App";
+
+const app = express();
+
+// app.get("/favicon.ico", (req, res) => res.end());
+app.use("/client.js", (req, res) => res.redirect("/build/client.js"));
+
+const DELAY = 500;
+app.use((req, res, next) => {
+  setTimeout(() => {
+    next();
+  }, DELAY);
+});
+
+const BEFORE = `
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>Cat Facts</title>
+      <link rel="stylesheet" href="/style.css">
+      <script type="module" defer src="/build/client.js"></script>
+    </head>
+    <body>
+      <h1>Stream Rendered Cat Facts!</h1>
+      <div id="approot">
+`.replace(/
+s*/g, "");
+
+app.get("/", async (request, response) => {
+  try {
+    const stream = renderToNodeStream(<App />);
+    const start = Date.now();
+
+    stream.on("data", function handleData() {
+      console.log("Render Start: ", Date.now() - start);
+      stream.off("data", handleData);
+      response.useChunkedEncodingByDefault = true;
+      response.writeHead(200, {
+        "content-type": "text/html",
+        "content-transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff"
+      });
+      response.write(BEFORE);
+      response.flushHeaders();
+    });
+    await new Promise((resolve, reject) => {
+      stream.on("error", err => {
+        stream.unpipe(response);
+        reject(err);
+      });
+      stream.on("end", () => {
+        console.log("Render End: ", Date.now() - start);
+        response.write("</div></body></html>");
+        response.end();
+        resolve();
+      });
+      stream.pipe(
+        response,
+        { end: false }
+      );
+    });
+  } catch (err) {
+    response.writeHead(500, {
+      "content-type": "text/pain"
+    });
+    response.end(String((err && err.stack) || err));
+    return;
+  }
+});
+
+app.use(express.static(path.resolve(__dirname, "src")));
+app.use("/build", express.static(path.resolve(__dirname, "build")));
+
+const listener = app.listen(process.env.PORT || 2048, () => {
+  console.log("Your app is listening on port " + listener.address().port);
+});
+```
+
+- Notes:
+  - This data contains useful information that our app has to use in order to render the contents correctly, such as the title of the document and a stylesheet.
+  - If we were to server render the **App** component using the **renderToString** method, we would have had to wait until the application has received all data before it can start loading and processing this metadata.
+  - To speed this up, **renderToNodeStream** makes it possible for the app to start loading and processing this information as it’s still receiving the chunks of data from the App component.
+
+**⚛️ React Streaming APIs:**
+
+1. **renderToNodeStream(element)**
+  - Same output as renderToString, but in stream format.
+  - Allows hydration on the client (ReactDOM.hydrate()).
+
+2. **renderToStaticNodeStream(element)**
+  - Same output as renderToStaticMarkup, but streamed.
+  - Used for static, non-interactive content.
+
+- Both can pipe directly into the HTTP response, progressively sending chunks to the client.
+
+**🌎 Real-world analogy:**
+- Imagine a restaurant kitchen:
+  - With **SSR**, the server waits until the entire meal is prepared before bringing it out.
+  - With **Streaming SSR**, the server brings out dishes one by one as soon as they’re ready. The customer can start eating immediately while the rest is still being cooked.
+
+**✅ Pros & Cons ❌:**
+
+**✅ Pros:**
+1. **Faster TTFB** – The client gets the first byte sooner and can start parsing immediately.
+2. **Handles backpressure** – Streams pause when the network is congested and resume when clear.
+3. **Lower memory usage** – The server doesn’t need to buffer the entire HTML before sending.
+4. **Supports SEO** – Since HTML is progressively streamed, crawlers can index it.
+
+
+**❌ Cons:** 
+1. Migration is **not always trivial** – code relying on **renderToString** can break.
+2. Frameworks that need to inject CSS/JS into **<head>** before rendering may require workarounds.
+3. If **renderToStaticMarkup** is combined with dynamic content via **renderToString**, it cannot be easily replaced with streams.
+
+**🔗 Relation to Other Patterns**
+- **SSR vs Streaming SSR:** SSR waits until everything is ready, Streaming SSR sends chunks progressively.
+- **Streaming + Progressive Hydration:** Together, they allow the browser to display partial HTML quickly and hydrate it in steps, combining speed with interactivity.
 
 ---
 
