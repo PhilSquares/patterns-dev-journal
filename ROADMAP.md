@@ -15,7 +15,7 @@
 - [x] **Day 3:** Static Rendering (SSG)  
 - [x] **Day 4:** Incremental Static Regeneration (ISR)  
 - [x] **Day 5:** Streaming SSR  
-- [ ] **Day 6:** Progressive Hydration  
+- [x] **Day 6:** Progressive Hydration  
 - [ ] **Day 7:** Selective Hydration  
 - [ ] **Day 8:** Islands Architecture  
 - [ ] **Day 9:** Partial Hydration  
