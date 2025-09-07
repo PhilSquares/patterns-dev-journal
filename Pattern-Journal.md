@@ -712,15 +712,116 @@ const listener = app.listen(process.env.PORT || 2048, () => {
 
 ---
 
-## Day 7 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 7 – Selective Hydration
+**📅 Date:** 2025-09-07  
+**📂 Category:** Rendering  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary 
+Selective Hydration is a rendering technique introduced in **React 18** that allows parts of a page to be hydrated in a prioritized order instead of all at once.  
+- Instead of blocking on slower parts of the UI (e.g., a comments section fetching data), React can hydrate interactive parts first (like navigation or buttons).  
+- This makes the page feel responsive faster, even if not all parts are fully interactive yet.  
+
+**💡 Problem It Solves:**  
+- Traditional hydration waits for the full app bundle before attaching interactivity, which can delay time-to-interactive.  
+- Progressive Hydration streams and hydrates gradually, but doesn’t prioritize *which* components hydrate first.  
+- **Selective Hydration** solves this by letting React prioritize important UI first while deprioritizing non-critical sections.  
+
+**Example (Patterns.dev):**  
+```javascript
+// server.js
+import { pipeToNodeWritable } from "react-dom/server";
+
+export function render(res) {
+  const data = createServerData();
+  const { startWriting, abort } = pipeToNodeWritable(
+    <DataProvider data={data}>
+      <App assets={assets} />
+    </DataProvider>,
+    res,
+    {
+      onReadyToStream() {
+        res.setHeader('Content-type', 'text/html');
+        res.write('<!DOCTYPE html>');
+        startWriting();
+      }
+    }
+  );
+}
+
+// App.js
+import { Suspense, lazy } from "react";
+import Loader from "./Loader";
+
+const Comments = lazy(() => import("./Comments"));
+
+function App() {
+  return (
+    <main>
+      <Header />
+      <Suspense fallback={<Loader />}>
+        <Comments />
+      </Suspense>
+      <Footer />
+    </main>
+  )
+}
+
+// index.js
+import { hydrateRoot } from "react-dom";
+import App from './App';
+
+hydrateRoot(document, <App />);
+```
+
+📌 How they work together (big picture flow)  
+1. **Server (server.js)** streams down the initial HTML shell quickly.  
+2. **App (App.js)** marks some components as critical (hydrate now) and others as deferred (hydrate later using `Suspense` + `lazy`).  
+3. **Client (index.js)** progressively hydrates sections of the DOM.  
+   - This avoids the “long blank screen” problem from full SSR hydration.  
+
+<details>
+<summary>🔧 Under the hood (React 18 APIs)</summary>
+
+- **`pipeToNodeWritable`**  
+  Streams HTML from the server to the client without waiting for the full render.  
+- **`Suspense` + `lazy`**  
+  Define hydration boundaries and defer less-critical components until their code/data is ready.  
+- **`hydrateRoot`**  
+  Hydrates the streamed HTML on the client, progressively attaching interactivity.  
+
+Together, these APIs allow React to **prioritize hydration**:  
+- Critical UI (e.g., navigation) hydrates first.  
+- Non-critical UI (e.g., comments, ads) hydrates later, without blocking the main thread.  
+
+</details>
+
+**🌎 Real-world analogy:**
+Think of a busy restaurant:
+- Customers should be seated, served drinks, and start eating appetizers right away.
+- The full meal (like a slow-roasted dish) can come later.
+- Selective Hydration works the same way — the essential parts of the UI are ready quickly while heavier components load in the background.
+
+**✅ Pros & Cons ❌:**
+
+**✅ Pros:**
+- Faster perceived interactivity since critical UI hydrates first.
+- Works well with React’s Suspense for data-fetching boundaries.
+- Great for apps with both high-priority (navigation, buttons) and low-priority (comments, ads, long lists) content.
+- Reduces main-thread blocking by breaking hydration into smaller, schedulable tasks.
+
+**❌ Cons:** 
+- Requires React 18+ and server-side setup for streaming.
+- More complex debugging since hydration can complete out of order.
+- Some third-party libraries may not yet be compatible with deferred hydration.
+- Developers must think carefully about which components are wrapped in Suspense or marked as lower-priority.
+
+🧪 When to reach for it:
+- Large pages, async data, or heavy components (feeds, comments, charts).
+- You want nav/search/buttons interactive ASAP without waiting for the whole app.
+
+⚠️ Gotchas:
+- Ensure code that manipulates document/head (styles/meta) runs before streaming starts.
+- Wrap network-bound or heavy components in Suspense and code-split via lazy.
 
 ---
 
