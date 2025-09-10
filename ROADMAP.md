@@ -18,7 +18,7 @@
 - [x] **Day 6:** Progressive Hydration  
 - [x] **Day 7:** Selective Hydration  
 - [x] **Day 8:** Islands Architecture  
-- [ ] **Day 9:** Partial Hydration  
+- [x] **Day 9:** React Server Components  
 - [ ] **Day 10:** Resumability (Qwik concepts)  
 
 ---
