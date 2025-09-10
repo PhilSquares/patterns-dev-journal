@@ -913,15 +913,45 @@ Think of a printed newspaper (static text/images) with detachable widgets insert
 
 ---
 
-## Day 9 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 9 – React Server Components
+**Date:** 2025-09-09  
+**Category:** Rendering 
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 🌟 What I Learned
+React Server Components (RSCs) allow parts of a React app to render on the server, sending **serialized UI trees** (instead of HTML) to the client. This means the browser hydrates less JavaScript, reducing bundle size and improving performance.
+
+The big shift:  
+- Traditional SSR/CSR patterns send **HTML + JavaScript**.  
+- RSCs send **serialized React tree data**, which React on the client merges with existing components.  
+
+This creates a hybrid rendering model where some components never need to ship to the client at all.
+
+---
+
+### 📌 Key Takeaways
+- **Zero-bundle components**: Pure server logic never reaches the browser.  
+- **Seamless integration**: RSCs work alongside client components (using the `"use client"` directive).  
+- **Improved performance**: Less JavaScript shipped → faster TTI (Time to Interactive).  
+- **Still experimental**: Not fully stable outside Next.js 13+ and some frameworks.
+
+---
+
+### 🔧 Under the hood (React 18 APIs) — click to expand
+<details>
+<summary>React APIs that make RSCs work</summary>
+
+- **`ReactDOM.createServerContext`** – experimental API to support server-driven context.  
+- **Flight protocol** – a React-specific serialization format that ships component trees.  
+- **Streaming integration** – RSC payloads can be streamed, combining with Suspense.  
+
+</details>
+
+---
+
+### 🧠 Personal Reflection
+This feels like the natural progression after selective hydration. I like how React Server Components blur the line between SSR and CSR while avoiding shipping unnecessary client code. The tradeoff is complexity—debugging and framework support is still a moving target.
+
+I see RSCs as most beneficial in **data-heavy apps** (dashboards, SaaS, CMS) where you want to keep logic close to the server and minimize client-side weight.
 
 ---
 
