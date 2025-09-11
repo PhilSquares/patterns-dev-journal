@@ -955,15 +955,47 @@ I see RSCs as most beneficial in **data-heavy apps** (dashboards, SaaS, CMS) whe
 
 ---
 
-## Day 10 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 10 – Rendering Patterns Recap
+**📅 Date:** 2025-09-10  
+**📂 Category:** Rendering  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Summary  
+The first 10 days of the challenge focused on **Rendering Patterns** — how applications deliver and hydrate UI.  
+Each pattern balances trade-offs between performance, interactivity, developer experience, and infrastructure setup.  
+
+This recap ties together the core lessons learned from **Days 1–9**.  
+
+---
+
+### 📊 Comparison of Rendering Patterns  
+
+| Pattern | Description | Strengths | Weaknesses | Example Use-Cases |
+|---------|-------------|-----------|------------|-------------------|
+| **CSR** | Rendered fully on client via JS. | Simple, no server infra needed. | Slow first paint, poor SEO. | SPAs, dashboards. |
+| **SSR** | Server renders HTML on request. | SEO-friendly, fast first paint. | Higher server load. | Blogs, e-commerce. |
+| **SSG** | Pre-build HTML at build-time. | Ultra-fast, cheap hosting. | Inflexible with dynamic data. | Marketing, docs. |
+| **ISR** | Static pages revalidated on-demand. | Combines SSG speed + dynamic content. | Stale data between rebuilds. | News, product catalogs. |
+| **Streaming SSR** | Server streams HTML progressively. | Faster TTFB, progressive rendering. | More complex infra. | Apps with large UI trees. |
+| **Progressive Hydration** | Gradual client hydration. | Faster interactivity vs full hydration. | Priority not controlled. | Medium-sized apps. |
+| **Selective Hydration** | React 18 prioritizes hydration. | Critical UI is interactive first. | Debugging is harder. | Apps w/ mixed priority UI. |
+| **Islands Architecture** | Independent UI “islands” hydrate separately. | Flexible, great for multi-frameworks. | Extra build complexity. | Jamstack, Astro sites. |
+| **React Server Components (RSC)** | Server + client split of React components. | Less JS shipped, powerful streaming. | React-specific, infra setup. | Large React apps, data-heavy UI. |
+
+---
+
+### 🌎 Reflection
+- Rendering patterns evolve from **speed vs flexibility trade-offs**.  
+- Simpler patterns (**CSR**/**SSR**/**SSG**) are easy to reason about but come with limits.  
+- Modern approaches (**ISR**, **RSC**, **Selective Hydration**) aim to balance **performance + developer ergonomics**.  
+- The right choice depends on the app’s **scale, content type, and interactivity needs**.  
+
+---
+
+### ✅ Key Takeaways  
+- There’s no “best” pattern—just the right fit for a use case.  
+- Streaming + hydration strategies are shaping the future of rendering.  
+- React Server Components may redefine the balance between server and client work.  
+- For my projects, I’d likely use **ISR for content-heavy sites** and **RSC/Selective Hydration for interactive apps**.  
 
 ---
 
