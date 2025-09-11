@@ -19,7 +19,7 @@
 - [x] **Day 7:** Selective Hydration  
 - [x] **Day 8:** Islands Architecture  
 - [x] **Day 9:** React Server Components  
-- [ ] **Day 10:** Resumability (Qwik concepts)  
+- [x] **Day 10:** Rendering Patterns Recap
 
 ---
 
