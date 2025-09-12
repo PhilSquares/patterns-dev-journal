@@ -999,15 +999,71 @@ This recap ties together the core lessons learned from **Days 1–9**.
 
 ---
 
-## Day 11 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 11 – Code Splitting (Bundle Splitting, Dynamic Import, Route-Based Splitting)
+**📅 Date:** 2025-09-11  
+**📂 Category:** Performance  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary
+**Code Splitting** is a performance optimization technique where the JavaScript bundle is divided into smaller chunks.  
+- Instead of shipping one large bundle, we only load what the user needs immediately.  
+- This reduces initial load time and improves perceived performance.  
+
+### 💡 Problem It Solves
+- Large bundles delay **First Contentful Paint (FCP)** and **Time to Interactive (TTI)**.  
+- Many parts of an application (e.g., admin panels, rarely used routes) don’t need to load upfront.  
+- Code splitting ensures that only the critical code is loaded first, while other parts are deferred.  
+
+### 🔧 Approaches
+1. **Bundle Splitting**  
+   - Breaks a large bundle into smaller logical pieces (vendor vs app code, shared dependencies).  
+   - Often handled automatically by bundlers like Webpack, Vite, or Rollup.  
+
+2. **Dynamic Import**  
+   - Load code *on demand* with `import()`.  
+  ```javascript
+   // Button.js
+   export function Button() {
+     console.log("Button loaded");
+   }
+
+   // App.js
+   async function loadButton() {
+     const { Button } = await import("./Button.js");
+     Button();
+   }
+  ```
+
+3. **Route-Based Splitting**
+   - Code is split by route so only the code for the current route is loaded.
+   - Works well with React’s lazy loading + Suspense:
+```javascript
+import { lazy, Suspense } from "react";
+const About = lazy(() => import("./About"));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <About />
+    </Suspense>
+  );
+}
+```
+🌎 Real-world analogy
+- Think of moving into a new apartment:
+- You don’t bring all your boxes into the living room on day one.
+- You unpack the kitchen first (critical for cooking), then the bedroom, and finally the storage room when you actually need it.
+
+✅ Pros & Cons ❌
+
+✅ Pros:
+- Faster initial load → smaller JS payload.
+- Better perceived performance (load only what matters).
+- Flexible: works for components, libraries, or whole routes.
+
+❌ Cons:
+- More HTTP requests (though mitigated by HTTP/2/3).
+- Potential UX issues if splitting isn’t paired with good loading states.
+- Requires thoughtful bundler configuration and monitoring bundle size.
 
 ---
 
