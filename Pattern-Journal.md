@@ -1067,15 +1067,33 @@ function App() {
 
 ---
 
-## Day 12 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 12 – Tree Shaking
+**📅 Date:** 2025-09-12  
+**📂 Category:** Performance  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+Tree Shaking is a performance optimization technique used in JavaScript bundlers (like Webpack, Rollup, and esbuild) that eliminates unused code from the final bundle. By analyzing imports and exports, it ensures that only the parts of a library or module that are actually used by the application are included, reducing file size and improving load times.  
+
+**💡 Problem It Solves:**  
+Without tree shaking, applications ship entire libraries even if only a single function is needed. This leads to larger bundle sizes, slower downloads, and reduced performance.  
+
+**Example (Patterns.dev):**  
+A common example is importing utility functions from a library like Lodash. If you only need `isEmpty`, tree shaking prevents the rest of Lodash from bloating your build (as long as you use ES module imports).  
+
+**🌎 Real-world analogy:**  
+Imagine buying a toolbox when you only need one screwdriver. Tree shaking is like the store removing the unnecessary tools so you walk away with just the screwdriver — lightweight and efficient.  
+
+**✅ Pros & Cons ❌:**  
+
+**✅ Pros:**  
+- Reduces bundle size and improves performance.  
+- Removes dead/unused code automatically.  
+- Works seamlessly with ES modules.  
+
+**❌ Cons:**  
+- Requires modern tooling and ES modules (CommonJS doesn’t tree-shake well).  
+- Dynamic imports or side-effect-heavy code can prevent effective tree shaking.  
+- Sometimes requires additional config to ensure maximum benefit.
 
 ---
 
