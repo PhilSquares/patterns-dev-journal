@@ -28,7 +28,7 @@
 
 - [x] **Day 11:** Code Splitting (Bundle Splitting, Dynamic Import, Route-Based Splitting)   
 - [x] **Day 12:** Tree Shaking  
-- [ ] **Day 13:** Minification & Compression  
+- [x] **Day 13:** JavaScript Compression & Minification
 - [ ] **Day 14:** Preloading & Prefetching Assets  
 - [ ] **Day 15:** Lazy Loading  
 - [ ] **Day 16:** Route-based Splitting  
