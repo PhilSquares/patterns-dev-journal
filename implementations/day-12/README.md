@@ -1,14 +1,28 @@
-# Day 12 – Pattern Name
+# Day 12 – Tree Shaking
 
 ## 📄 Summary
-Brief description of the pattern.
+Tree Shaking is the process of eliminating unused code from JavaScript bundles, making applications smaller and faster. It is typically implemented in build tools like Webpack, Rollup, and esbuild.  
 
 ## 💡 Problem It Solves
-What this pattern is meant to address.
+Large bundles often contain unused parts of libraries or modules. Tree Shaking analyzes imports/exports and removes code that isn’t referenced, ensuring only what you use ships to the browser.  
 
 ## 🌎 Real-world Mapping
-Discuss an existing application/use-case
+For example, if you import a single utility from Lodash but don’t tree-shake, you might accidentally include the entire library. With tree shaking, only that specific function is bundled.  
 
 ## 🛠 My Mini Implementation
 ```javascript
-// Example code goes here
+// utils.js
+export function add(a, b) {
+  return a + b;
+}
+
+export function multiply(a, b) {
+  return a * b;
+}
+
+// main.js
+import { add } from './utils.js';
+
+console.log(add(2, 3)); 
+// multiply() is never used, so tree shaking will remove it from the final build.
+```
