@@ -1140,15 +1140,46 @@ module.exports = {
 
 ---
 
-## Day 14 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 14 – Preloading & Prefetching Assets  
+**📅 Date:** 2025-09-14  
+**📂 Category:** Performance  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+Preload and Prefetch are browser resource-hint techniques that help improve resource discovery and load order to make web apps feel faster.  
+- **Preload** (`<link rel="preload">`) is for critical resources that you know will be needed soon, allowing them to be requested earlier even if they're discovered late in your HTML or JS.
+- **Prefetch** (`<link rel="prefetch">`) is for resources you expect to need in subsequent navigation or interactions, loaded with lower priority so as not to block critical rendering.
+
+---
+
+### 💡 Problem It Solves  
+- Without **preload**, the browser may delay fetching critical resources because they appear late or are dynamically discovered, hurting metrics like **First Contentful Paint (FCP)** and **Time to Interactive (TTI)**.  
+- Without **prefetch**, when navigating or interacting, resources may not be available and cause delays (e.g. clicking to a route, opening a modal), because they weren’t loaded ahead of time.  
+
+---
+
+### **Example (Patterns.dev):**  
+- Preloading a font, script, or hero image needed immediately on first render ensures the browser doesn’t wait until later in parsing to begin fetching. 
+- Prefetching JS bundles that correspond to routes likely to be visited next, so when the user navigates, the resource is already cached or partially loaded. 
+
+---
+
+### 🌎 Real-world analogy:  
+Think of driving on a road trip. **Preload** is like fueling up before a long stretch you *know* is coming, so you don’t risk being stranded. **Prefetch** is like stopping at a rest stop ahead of time for a snack you’ll need later—even though you’re not hungry now to avoid delays later.
+
+---
+
+### ✅ Pros & Cons ❌  
+
+**✅ Pros:**  
+- Improved perceived performance: critical assets available earlier.  
+- Smoother navigation and interaction by reducing waiting times when switching routes/modal/sections.  
+- Works with existing HTML hint tags and modern build tools; relatively low setup cost.
+
+**❌ Cons:**  
+- If misused, preload can hurt performance (fetching too many “critical” resources may block or delay other important ones).  
+- Prefetching wastes resources if the prefetched assets are never used (bandwidth/caching overhead).  
+- Browser behavior and support vary; sometimes prefetch hints are ignored or throttled depending on connection.  
+- Preload requires careful tuning: you have to decide what is “critical” and how much to preload without clogging the network.
 
 ---
 
