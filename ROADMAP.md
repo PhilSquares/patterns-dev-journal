@@ -30,7 +30,7 @@
 - [x] **Day 12:** Tree Shaking  
 - [x] **Day 13:** JavaScript Compression & Minification
 - [x] **Day 14:** Preloading & Prefetching Assets  
-- [ ] **Day 15:** Lazy Loading  
+- [x] **Day 15:** Import On Interaction / Visibility (Lazy Loading)  
 - [ ] **Day 16:** Route-based Splitting  
 - [ ] **Day 17:** Service Workers & Caching Strategies  
 - [ ] **Day 18:** Image Optimization  
