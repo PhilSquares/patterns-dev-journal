@@ -1183,15 +1183,39 @@ Think of driving on a road trip. **Preload** is like fueling up before a long st
 
 ---
 
-## Day 15 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 15 – Import On Interaction / Visibility (Lazy Loading)
+**📅 Date:** 2025-09-15  
+**📂 Category:** Performance
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary 
+
+**💡 Problem It Solves:**  
+Loading all JavaScript at once can make pages slow to start, especially if much of that code is not immediately needed. Import On Interaction and Import On Visibility solve this by **deferring the loading of modules** until the user either interacts with a feature or the feature becomes visible in the viewport.
+
+**Example (Patterns.dev):**  
+- **Import On Interaction**: A button click dynamically imports the code for a modal or feature.  
+- **Import On Visibility**: A carousel or map loads only when scrolled into view.  
+
+**🌎 Real-world analogy:**  
+Think of a theme park. Instead of having every ride running at full power the moment the park opens (even if no one is riding them), rides only power up when guests approach or get in line. This saves resources while still giving the visitor what they need at the right time.
+
+**✅ Pros & Cons ❌:**
+
+**✅ Pros:**  
+- Smaller initial bundle size → faster load times.  
+- Less JavaScript parsing and execution upfront.  
+- Improves *time-to-interactive* and perceived performance.  
+
+**❌ Cons:**  
+- Adds extra network requests during interaction or scrolling.  
+- Can introduce slight delays if users expect instant interaction.  
+- Requires good UX (e.g., spinners, skeleton loaders) to smooth the experience.  
+
+---
+
+**🔗 References:**  
+- [Patterns.dev – Import On Interaction](https://www.patterns.dev/vanilla/import-on-interaction/)  
+- [Patterns.dev – Import On Visibility](https://www.patterns.dev/vanilla/import-on-visibility/)  
 
 ---
 
