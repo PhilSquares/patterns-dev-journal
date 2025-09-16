@@ -31,7 +31,7 @@
 - [x] **Day 13:** JavaScript Compression & Minification
 - [x] **Day 14:** Preloading & Prefetching Assets  
 - [x] **Day 15:** Import On Interaction / Visibility (Lazy Loading)  
-- [ ] **Day 16:** Route-based Splitting  
+- [x] **Day 16:** Route-based Splitting  
 - [ ] **Day 17:** Service Workers & Caching Strategies  
 - [ ] **Day 18:** Image Optimization  
 - [ ] **Day 19:** Web Vitals Monitoring  
