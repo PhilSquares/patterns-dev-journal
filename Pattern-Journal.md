@@ -1219,15 +1219,34 @@ Think of a theme park. Instead of having every ride running at full power the mo
 
 ---
 
-## Day 16 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 16 – Route-based Splitting
+**📅 Date:** 2025-09-16  
+**📂 Category:** Performance  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+
+Route-based splitting is a strategy where application code is divided by **routes (pages)** so that only the code needed for the active page is loaded. Instead of delivering one large bundle, each route has its own chunk. This reduces initial load times and improves performance for large apps.  
+
+**💡 Problem It Solves:**  
+Loading an entire application’s code upfront can lead to slow startup times, especially if many routes are rarely visited. Route-based splitting ensures only the relevant code is downloaded when needed.  
+
+**Example (Patterns.dev):**  
+Patterns.dev discusses **Code Splitting** generally. Route-based splitting is one of its most common implementations, often supported out-of-the-box in frameworks like **Next.js, Gatsby, Vue, Angular, and React Router (via dynamic import)**.  
+
+**🌎 Real-world analogy:**  
+Imagine a theme park with multiple attractions (routes). Instead of handing visitors a huge all-in-one map covering everything, the park gives them a smaller map only for the section they’re currently visiting. They can grab new maps as they explore new areas.  
+
+**✅ Pros & Cons ❌:**  
+
+**✅ Pros:**  
+- Smaller initial bundle size = faster first paint.  
+- Efficient for apps with many routes but low overlap.  
+- Works seamlessly with modern frameworks and bundlers.  
+
+**❌ Cons:**  
+- First-time navigation to a new route may introduce a small loading delay.  
+- Can complicate shared state management if many lazy-loaded routes depend on common libraries.  
+- May need prefetching strategies to smooth user experience.  
 
 ---
 
