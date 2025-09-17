@@ -32,7 +32,7 @@
 - [x] **Day 14:** Preloading & Prefetching Assets  
 - [x] **Day 15:** Import On Interaction / Visibility (Lazy Loading)  
 - [x] **Day 16:** Route-based Splitting  
-- [ ] **Day 17:** Service Workers & Caching Strategies  
+- [x] **Day 17:** Service Workers & Caching Strategies _(Extended Pattern)_   
 - [ ] **Day 18:** Image Optimization  
 - [ ] **Day 19:** Web Vitals Monitoring  
 - [ ] **Day 20:** Debouncing & Throttling  
