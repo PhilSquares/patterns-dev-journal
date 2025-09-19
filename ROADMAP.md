@@ -34,7 +34,7 @@
 - [x] **Day 16:** Route-based Splitting  
 - [x] **Day 17:** Service Workers & Caching Strategies _(Extended Pattern)_   
 - [x] **Day 18:** Image Optimization _(Extended Pattern)_   
-- [ ] **Day 19:** Web Vitals Monitoring  
+- [x] **Day 19:** Web Vitals Monitoring  
 - [ ] **Day 20:** Debouncing & Throttling  
 
 ---
