@@ -33,7 +33,7 @@
 - [x] **Day 15:** Import On Interaction / Visibility (Lazy Loading)  
 - [x] **Day 16:** Route-based Splitting  
 - [x] **Day 17:** Service Workers & Caching Strategies _(Extended Pattern)_   
-- [ ] **Day 18:** Image Optimization  
+- [x] **Day 18:** Image Optimization _(Extended Pattern)_   
 - [ ] **Day 19:** Web Vitals Monitoring  
 - [ ] **Day 20:** Debouncing & Throttling  
 
