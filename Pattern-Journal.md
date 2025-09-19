@@ -1286,15 +1286,33 @@ Imagine a **personal assistant** who remembers your usual coffee order.
 
 ---
 
-## Day 18 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 18 – Image Optimization
+**📅 Date:** 2025-09-18  
+**📂 Category:** Performance (Extended Pattern)
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary 
+**Image Optimization** focuses on reducing the size, format, and delivery cost of images to improve page load performance without sacrificing quality.
+
+**💡 Problem It Solves:**  
+Images are often the largest assets on a webpage, significantly impacting loading time, Core Web Vitals, and user experience. Optimizing them reduces bandwidth usage and speeds up delivery.
+
+**Example (Patterns.dev):**  
+Not directly covered. This is an **extended performance pattern** widely adopted in real-world web performance best practices.
+
+**🌎 Real-world analogy:**  
+Think of moving furniture: instead of hauling oversized, heavy boxes (unoptimized images), you break them down into compact, lighter packages (optimized images) that are easier to carry and faster to move.
+
+**✅ Pros & Cons ❌:**
+
+**✅ Pros:**  
+- Faster load times and improved Core Web Vitals (LCP in particular).  
+- Reduced bandwidth usage.  
+- Better user experience on slow or mobile networks.  
+
+**❌ Cons:**  
+- Requires additional build tooling or CDNs.  
+- Might need multiple formats (WebP, AVIF, fallback JPEG/PNG).  
+- Over-compression risks losing visual quality.
 
 ---
 
