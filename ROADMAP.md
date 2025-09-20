@@ -35,7 +35,7 @@
 - [x] **Day 17:** Service Workers & Caching Strategies _(Extended Pattern)_   
 - [x] **Day 18:** Image Optimization _(Extended Pattern)_   
 - [x] **Day 19:** Web Vitals Monitoring  
-- [ ] **Day 20:** Debouncing & Throttling  
+- [x] **Day 20:** Debouncing & Throttling _(Extended Pattern)_  
 
 ---
 
