@@ -1349,15 +1349,33 @@ Think of Core Web Vitals like a **fitness tracker for your website**. Just as a 
 
 ---
 
-## Day 20 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 20 – Debouncing & Throttling (Extended Performance Pattern)
+**📅 Date:** 2025-09-20  
+**📂 Category:** Performance  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+
+**💡 Problem It Solves:**  
+Modern apps often fire too many events (scroll, resize, input, clicks). Debouncing and throttling limit how often expensive functions execute, improving performance and user experience.  
+
+**Example (Patterns.dev):**  
+⚠️ Not covered directly on Patterns.dev — added as an **Extended Performance Pattern** for completeness.  
+
+**🌎 Real-world analogy:**  
+- **Debounce:** Like waiting until everyone stops talking before responding in a meeting.  
+- **Throttle:** Like allowing only one person to speak per time interval, even if multiple try.  
+
+**✅ Pros & Cons ❌:**  
+
+**✅ Pros:**  
+- Prevents performance bottlenecks on high-frequency events.  
+- Improves responsiveness and perceived smoothness.  
+- Easy to implement with small utility functions.  
+
+**❌ Cons:**  
+- Adds slight complexity when managing timers.  
+- Debouncing may delay immediate actions.  
+- Throttling may drop intermediate actions/events.  
 
 ---
 
