@@ -1379,17 +1379,45 @@ Modern apps often fire too many events (scroll, resize, input, clicks). Debounci
 
 ---
 
-## Day 21 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 21 – Singleton Pattern  
+**📅 Date:** 2025-09-21  
+**📂 Category:** Design  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+The Singleton Pattern ensures that a class or module has only **one instance** and provides a global point of access to it. It’s useful for shared resources or global state, such as configuration managers, logging services, or caches.
+
+### 💡 Problem It Solves:  
+- Avoids duplication of global resources (e.g., multiple loggers or caches) that can lead to inconsistent state or wasted memory.  
+- Ensures centralized control over shared behaviors.
+
+### Example (Patterns.dev):  
+- ES6 class that blocks new instances via a static or module-scoped `instance` variable, throwing an error if constructor attempts to recreate.  
+- Freezing the singleton instance with `Object.freeze()` to reduce accidental mutation. 
+
+### 🌎 Real-world analogy:  
+Think of a **house with a single thermostat**. Everyone living there shares the same thermostat settings. If there were multiple ones with different set points, the temperature would be inconsistent.
+
+### ✅ Pros & Cons ❌:
+
+**✅ Pros:**  
+- Guarantees exactly one instance → simpler tracking of shared state.  
+- Reduces overhead (no repeated initialization).  
+- Useful where a single, centralized controller or resource manager is appropriate (e.g., logging, configuration).  
+- In modern JS/TS, easier to implement via modules or objects rather than complex classes.
+
+**❌ Cons:**  
+- Risk of **hidden global state** → harder to reason about where mutations come from.  
+- Can make testing more complex (tests need to reset singletons).  
+- Overuse leads to tight coupling; components become less portable.  
+- In server environments (SSR), need care to avoid instance reuse across requests unless intended.
 
 ---
+
+🔗 References & Best Practice Notes:  
+- Use module exports to create simpler singletons rather than elaborate class patterns when appropriate.  
+- In TypeScript, mark fields or methods as `readonly` to prevent unwanted mutation.  
+- Avoid mutable state in singletons where possible; use immutability strategies or pure functions.  
+- In React or other component-based frameworks, prefer dependency injection / context APIs over raw singletons when dealing with frontend/shared state across routes.
 
 ## Day 22 – Pattern Name
 **Date:** YYYY-MM-DD  
