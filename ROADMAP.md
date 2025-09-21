@@ -42,7 +42,7 @@
 ### 🏗️ Days 21–30: Design Patterns  
 **Organizing code for flexibility, scalability, and maintainability.** 
 
-- [ ] **Day 21:** Singleton Pattern  
+- [x] **Day 21:** Singleton Pattern  
 - [ ] **Day 22:** Factory Pattern  
 - [ ] **Day 23:** Module Pattern  
 - [ ] **Day 24:** Observer Pattern  
