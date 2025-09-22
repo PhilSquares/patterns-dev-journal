@@ -43,7 +43,7 @@
 **Organizing code for flexibility, scalability, and maintainability.** 
 
 - [x] **Day 21:** Singleton Pattern  
-- [ ] **Day 22:** Factory Pattern  
+- [x] **Day 22:** Factory Pattern  
 - [ ] **Day 23:** Module Pattern  
 - [ ] **Day 24:** Observer Pattern  
 - [ ] **Day 25:** Mediator Pattern  
