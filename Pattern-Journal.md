@@ -1413,21 +1413,61 @@ Think of a **house with a single thermostat**. Everyone living there shares the 
 
 ---
 
-🔗 References & Best Practice Notes:  
+### 📝 Best Practice Notes:  
 - Use module exports to create simpler singletons rather than elaborate class patterns when appropriate.  
 - In TypeScript, mark fields or methods as `readonly` to prevent unwanted mutation.  
 - Avoid mutable state in singletons where possible; use immutability strategies or pure functions.  
 - In React or other component-based frameworks, prefer dependency injection / context APIs over raw singletons when dealing with frontend/shared state across routes.
 
-## Day 22 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 22 – Factory Pattern  
+**📅 Date:** 2025-09-22  
+**📂 Category:** Design  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+The Factory Pattern lets you create objects via functions (factory functions) that encapsulate object creation logic. Instead of using the `new` keyword or classes directly everywhere, you call a factory, which sets up the object with needed properties or methods (and hides internal setup).  
+
+### 💡 Problem It Solves:  
+- Avoid repeated boilerplate when creating similar objects.  
+- Encapsulate configuration or environment differences in one place rather than spreading logic everywhere.  
+- Make object creation more readable and easier to maintain.  
+
+### Example (Patterns.dev):  
+A factory that creates `User` objects:  
+```js
+const createUser = ({ firstName, lastName, email }) => ({
+  firstName,
+  lastName,
+  email,
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+});
+```
+
+You can then create many users with different data quickly, but sharing the same structure.
+
+### 🌎 Real-world analogy:
+- Think of a car factory: instead of each person building their own car from scratch, the factory standardizes parts, configuration, assembly, and ensures consistency. You can customize color, engine type, etc., but the core framework is shared.
+
+### ✅ Pros & Cons ❌:
+
+**✅ Pros:**
+- DRY object creation (Don’t Repeat Yourself).
+- Centralized logic makes maintenance easier, especially when object shape needs to change.
+- Good encapsulation of configuration logic.
+- Can enhance readability and reduce code duplication.
+
+**❌ Cons:**
+- Each call to a factory may create new object instances; if many are created frequently this can affect performance and GC.
+- Without careful design, factories can become catch-alls (too many responsibilities).
+- Factories sometimes hide where behavior comes from, making debugging harder.
+- If state is shared via prototypes or externally, risks of unintended shared mutations exist.
+
+### 🔗📝 References & Best Practice Notes:
+- [Patterns.dev – Factory Pattern](https://www.patterns.dev/vanilla/factory-pattern/)
+- Use TypeScript / typing for the created objects shape.
+- Prefer immutable objects or freezing return values if sharing objects.
+- Use factories for configuration or environment differences rather than sprinkling logic throughout app.
 
 ---
 
