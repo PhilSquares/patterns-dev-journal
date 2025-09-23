@@ -44,7 +44,7 @@
 
 - [x] **Day 21:** Singleton Pattern  
 - [x] **Day 22:** Factory Pattern  
-- [ ] **Day 23:** Module Pattern  
+- [x] **Day 23:** Module Pattern  
 - [ ] **Day 24:** Observer Pattern  
 - [ ] **Day 25:** Mediator Pattern  
 - [ ] **Day 26:** Strategy Pattern  
