@@ -1605,15 +1605,61 @@ You can then subscribe functions (observers) to this observable, and call notify
 
 ---
 
-## Day 25 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 25 – Prototype Pattern  
+**📅 Date:** 2025-09-25  
+**📂 Category:** Design  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+The Prototype Pattern allows objects to share behavior via JavaScript’s built-in prototype chain. Instead of duplicating methods on each instance, you place shared methods on the prototype so all instances can delegate to it. The pattern uses the language’s native prototypal inheritance to share behavior efficiently.
+
+### 💡 Problem It Solves  
+- Prevents memory duplication of methods on every instance.  
+- Allows you to extend or patch behavior after instances are created (by modifying the prototype).  
+- Lets subclass or extend existing types easily using prototypal chaining.  
+
+### Example (Patterns.dev)  
+```js
+class Dog {
+  constructor(name) {
+    this.name = name;
+  }
+
+  bark() {
+    return `Woof!`;
+  }
+}
+
+const dog1 = new Dog("Daisy");
+const dog2 = new Dog("Max");
+
+// Add new behavior later
+Dog.prototype.play = () => console.log("Playing now!");
+dog1.play(); // “Playing now!”
+```
+
+Note: You can also leverage **Object.create()** to set up prototype chains manually.
+
+### 🌎 Real-world Analogy
+
+Imagine a blueprint (prototype) for a product. You don’t reprint the blueprint each time — you make a copy referencing that blueprint. If you update the blueprint (prototype), all existing copies (instances) gain the change.
+
+### ✅ Pros & Cons ❌
+**✅ Pros:**
+- Saves memory by sharing shared methods via the prototype.
+- Flexibility to extend behavior after instantiation by patching the prototype.
+- Natural in JavaScript — works with ES6 classes, extends, and Object.create.
+
+### ❌ Cons:
+- If you mutate shared state on the prototype, you risk unintended side effects.
+- It can be harder to trace behavior since methods may be far up the prototype chain.
+- Overriding or shadowing methods can lead to confusing bugs.
+
+---
+
+🔗 References & Further Reading
+
+- [Patterns.dev – Prototype Pattern](https://www.patterns.dev/vanilla/prototype-pattern/?utm_source=chatgpt.com)
+- [MDN – Prototypes and Inheritance in JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain)
 
 ---
 
