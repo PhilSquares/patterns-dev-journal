@@ -46,7 +46,7 @@
 - [x] **Day 22:** Factory Pattern  
 - [x] **Day 23:** Module Pattern  
 - [x] **Day 24:** Observer Pattern  
-- [ ] **Day 25:** Mediator Pattern  
+- [x] **Day 25:** Prototype Pattern
 - [ ] **Day 26:** Strategy Pattern  
 - [ ] **Day 27:** Proxy Pattern  
 - [ ] **Day 28:** Adapter Pattern  
