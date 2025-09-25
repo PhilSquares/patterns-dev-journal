@@ -1535,15 +1535,73 @@ Think of a library with “public bookshelves” and “staff-only areas.” The
 
 ---
 
-## Day 24 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 24 – Observer Pattern  
+**📅 Date:** 2025-09-24  
+**📂 Category:** Design  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+The Observer Pattern allows objects (observers) to subscribe to another object (the observable or subject). When an event or state change occurs in the observable, it **notifies** all registered observers, typically by calling a function they provided. This creates a **one-to-many** relationship, decoupling the subject from its dependents.  
+
+An observable usually provides three main methods:  
+- `subscribe(observerFn)` — add an observer  
+- `unsubscribe(observerFn)` — remove an observer  
+- `notify(data)` — broadcast data/changes to all observers  
+
+### 💡 Problem It Solves  
+- Prevents tight coupling: the subject doesn’t need to know the details of what each observer does.  
+- Supports dynamic registration: observers can subscribe/unsubscribe at runtime.  
+- Useful in event-driven systems: many components can react to the same event or change.  
+- Enables reactive-style communication: changes propagate to interested parties automatically.
+
+### Example (Patterns.dev)  
+```js
+class Observable {
+  constructor() {
+    this.observers = [];
+  }
+
+  subscribe(func) {
+    this.observers.push(func);
+  }
+
+  unsubscribe(func) {
+    this.observers = this.observers.filter(observer => observer !== func);
+  }
+
+  notify(data) {
+    this.observers.forEach(observer => observer(data));
+  }
+}
+```
+
+You can then subscribe functions (observers) to this observable, and call notify(...) to broadcast changes.
+
+### 🌎 Real-world analogy
+- Imagine a newsletter system.
+- The newsletter is the subject (observable).
+- Subscribers (observers) sign up/leaving.
+- Whenever a new issue is released, the newsletter notifies all its subscribers, sending them the new content.
+- Subscribers operate independently; the newsletter just broadcasts.
+
+### ✅ Pros & Cons ❌
+
+**✅ Pros:**
+- Loose coupling: subjects and observers don’t depend directly on each other’s implementation.
+- Flexible: observers can come and go dynamically.
+- Scalable: many observers can listen to one subject.
+- Reusable: the same observable logic can be reused across different domains.
+
+**❌ Cons:**
+- Memory leaks: if observers aren’t unsubscribed properly, they may persist and leak memory.
+- Performance cost: notifying many observers can be heavy if done synchronously in tight loops.
+- Unpredictability: the order of updates may matter; some observers may see stale data if ordering isn’t careful.
+- Debug complexity: tracing who notified whom can become tricky in large applications.
+
+---
+
+🔗 References & Further Reading
+- [Patterns.dev – **Observer Pattern**](https://www.patterns.dev/vanilla/observer-pattern/) 
+- [SitePoint article on Observer in JavaScript](https://www.sitepoint.com/javascript-design-patterns-observer-pattern/?utm_source=chatgpt.com) 
 
 ---
 
