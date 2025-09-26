@@ -1,14 +1,57 @@
-# Day 26 – Pattern Name
+# Day 26 – Strategy Pattern
 
 ## 📄 Summary
-Brief description of the pattern.
+The Strategy Pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. It lets the algorithm vary independently from the clients that use it.
 
 ## 💡 Problem It Solves
-What this pattern is meant to address.
+Avoids large conditionals when different behaviors are needed. Instead, behaviors are isolated in their own strategy objects and can be swapped dynamically.
 
 ## 🌎 Real-world Mapping
-Discuss an existing application/use-case
+A payment system: some customers pay with credit card, others with PayPal, others with cryptocurrency. The checkout process (context) is the same, but the payment strategy changes.
 
 ## 🛠 My Mini Implementation
 ```javascript
-// Example code goes here
+// Strategy implementations
+class CreditCardPayment {
+  pay(amount) {
+    console.log(`Paid $${amount} with Credit Card.`);
+  }
+}
+
+class PayPalPayment {
+  pay(amount) {
+    console.log(`Paid $${amount} with PayPal.`);
+  }
+}
+
+class CryptoPayment {
+  pay(amount) {
+    console.log(`Paid $${amount} with Cryptocurrency.`);
+  }
+}
+
+// Context
+class PaymentContext {
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+
+  setStrategy(strategy) {
+    this.strategy = strategy;
+  }
+
+  checkout(amount) {
+    this.strategy.pay(amount);
+  }
+}
+
+// Usage
+const payment = new PaymentContext(new CreditCardPayment());
+payment.checkout(50); // Paid $50 with Credit Card.
+
+payment.setStrategy(new PayPalPayment());
+payment.checkout(75); // Paid $75 with PayPal.
+
+payment.setStrategy(new CryptoPayment());
+payment.checkout(100); // Paid $100 with Cryptocurrency.
+```
