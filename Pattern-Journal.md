@@ -1663,15 +1663,31 @@ Imagine a blueprint (prototype) for a product. You don’t reprint the blueprint
 
 ---
 
-## Day 26 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 26 – Strategy Pattern
+**📅 Date:** 2025-09-26  
+**📂 Category:** Design Patterns (Extended)  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+
+**💡 Problem It Solves:**  
+When you have multiple ways of performing an operation (like calculating discounts, sorting, or validating input), hardcoding logic with `if/else` or `switch` makes code rigid and hard to maintain. The Strategy Pattern allows swapping algorithms at runtime without changing the object that uses them.  
+
+**Example (Patterns.dev):**  
+_Note: This pattern isn't directly available on Patterns.dev. It's simply an extended pattern for todays entry._  
+
+**🌎 Real-world analogy:**  
+Think of a navigation app: you can choose a “fastest route,” “shortest route,” or “avoid tolls.” The app (context) doesn’t change — only the strategy (algorithm) you select for routing.  
+
+**✅ Pros & Cons ❌:**  
+
+**✅ Pros:**  
+- Promotes open/closed principle (add new strategies without modifying existing code).  
+- Makes algorithms interchangeable and testable.  
+- Keeps the context class clean and focused.  
+
+**❌ Cons:**  
+- Can increase complexity if too many strategies are defined.  
+- Clients must be aware of available strategies to select the right one.  
 
 ---
 
