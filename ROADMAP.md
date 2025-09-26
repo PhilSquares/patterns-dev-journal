@@ -47,7 +47,7 @@
 - [x] **Day 23:** Module Pattern  
 - [x] **Day 24:** Observer Pattern  
 - [x] **Day 25:** Prototype Pattern
-- [ ] **Day 26:** Strategy Pattern  
+- [x] **Day 26:** Strategy Pattern _(Extended Pattern)_  
 - [ ] **Day 27:** Proxy Pattern  
 - [ ] **Day 28:** Adapter Pattern  
 - [ ] **Day 29:** Decorator Pattern  
