@@ -1691,15 +1691,63 @@ Think of a navigation app: you can choose a “fastest route,” “shortest rou
 
 ---
 
-## Day 27 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 27 – Proxy Pattern  
+**📅 Date:** 2025-09-27  
+**📂 Category:** Design  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+A **Proxy** acts as a stand-in or wrapper for another object (the “target”), intercepting interactions (like property access, method calls, setting values) and optionally adding logic before or after forwarding the request to the target. Patterns.dev describes this: “Instead of interacting with the `person` object directly, we’ll interact with a `Proxy` object which can control get and set behavior.”
+
+In JavaScript, the `Proxy` built-in is typically used, along with a handler object defining traps like `get` and `set`.
+
+### 💡 Problem It Solves  
+- Adds control over object access without modifying the original object.  
+- Enables validation, logging, protection, or lazy initialization transparently.  
+- Lets you transparently wrap objects and enforce policies or side effects.  
+
+### Example (Patterns.dev)  
+From the article:  
+```js
+const person = { name: "John Doe", age: 42, nationality: "American" };
+
+const personProxy = new Proxy(person, {
+  get: (obj, prop) => {
+    console.log(`The value of ${prop} is ${obj[prop]}`);
+    return obj[prop];  // return actual value too
+  },
+  set: (obj, prop, value) => {
+    console.log(`Changed ${prop} from ${obj[prop]} to ${value}`);
+    obj[prop] = value;
+    return true; // indicate success
+  }
+});
+
+personProxy.name;        // logs “The value of name is John Doe”  
+personProxy.age = 43;    // logs “Changed age from 42 to 43”  
+```
+
+The proxy intercepts get and set operations and logs before forwarding to the real object.
+
+**🌎 Real-world Analogy**
+
+Think of a reception desk at a building: visitors first interact with the receptionist (proxy), who verifies or filters requests, then forwards them to offices (the real objects). The visitor doesn’t deal with the office directly — the receptionist mediates access and adds checks (e.g. ID, logging, permission).
+
+**✅ Pros & Cons ❌**
+
+**✅ Pros:**
+- Transparent wrapping: clients can use the proxy just as they’d use the original object.
+- Adds cross-cutting logic (logging, security, validation) without cluttering core logic.
+- Good for lazy loading or “virtual proxies” for heavy resources.
+- Enables fine-grained control over property or method interactions.
+
+**❌ Cons:**
+- Performance overhead: every access passes through the trap, which can slow things down.
+- Complexity: debugging becomes harder when logic is hidden in traps.
+- Overuse can lead to “magical” objects that are harder to reason about.
+- Must ensure traps carefully forward correct behavior (e.g. returning true in set, maintaining invariants).
+
+🔗 References & Notes
+- [Patterns.dev Proxy Pattern](https://www.patterns.dev/vanilla/proxy-pattern/)
 
 ---
 
