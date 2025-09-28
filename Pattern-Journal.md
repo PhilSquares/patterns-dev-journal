@@ -1751,15 +1751,63 @@ Think of a reception desk at a building: visitors first interact with the recept
 
 ---
 
-## Day 28 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 28 – Mixin Pattern
+**📅 Date:** 2025-09-28  
+**📂 Category:** Design Patterns  
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary  
+**Mixin Pattern** is a technique to add reusable functionality to objects or classes without using inheritance. Rather than extending a class, you “mix in” methods or properties, often by copying them onto prototypes or objects. 
+
+It allows shared behavior to be composed rather than inherited, making code more modular, flexible, and decoupled.
+
+### 💡 Problem It Solves  
+- Avoids deep or rigid inheritance hierarchies when you need shared functionality across different, unrelated classes.  
+- Enables code reuse without forcing classes into an inheritance relationship.  
+- Offers a way to attach behavior dynamically.
+
+### Example (Patterns.dev):  
+```js
+class Dog {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+const dogFunctionality = {
+  bark() {
+    console.log("Woof!");
+  },
+  wagTail() {
+    console.log("Wagging tail");
+  },
+  play() {
+    console.log("Playing!");
+  }
+};
+
+Object.assign(Dog.prototype, dogFunctionality);
+
+const pet = new Dog("Daisy");
+pet.bark();    // “Woof!”
+pet.wagTail(); // “Wagging tail”
+```
+
+**🌎 Real-world analogy**
+
+Think of a toolkit you attach to different kinds of machines. Rather than building a machine that is the toolkit, you “mix it in” so any machine can use the tools when needed—without being a subclass of a “tool-machine.”
+
+✅ Pros & Cons ❌
+
+**✅ Pros:**
+- Flexibility: you can compose behavior into classes without forcing inheritance.
+- Reusability: mixins can be shared across many classes.
+- Simpler structure: avoids overcomplicated class hierarchies.
+
+**❌ Cons:**
+- Risk of method name collisions or overwriting behavior inadvertently.
+- Harder to trace origin of methods: which mixin added which behavior?
+- Overuse can lead to “god objects” mixing in too much.
+- Mixin logic that mutates shared state must be handled carefully to avoid unexpected side effects.
 
 ---
 
