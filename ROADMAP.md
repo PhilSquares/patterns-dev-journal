@@ -50,7 +50,7 @@
 - [x] **Day 26:** Strategy Pattern _(Extended Pattern)_  
 - [x] **Day 27:** Proxy Pattern  
 - [x] **Day 28:** Mixin Pattern  
-- [ ] **Day 29:** Decorator Pattern  
+- [x] **Day 29:** Decorator Pattern _(Extended Pattern)_  
 - [ ] **Day 30:** MVC / MVVM in modern frameworks  
 
 ---
