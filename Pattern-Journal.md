@@ -1796,7 +1796,7 @@ pet.wagTail(); // “Wagging tail”
 
 Think of a toolkit you attach to different kinds of machines. Rather than building a machine that is the toolkit, you “mix it in” so any machine can use the tools when needed—without being a subclass of a “tool-machine.”
 
-✅ Pros & Cons ❌
+**✅ Pros & Cons ❌**
 
 **✅ Pros:**
 - Flexibility: you can compose behavior into classes without forcing inheritance.
@@ -1811,15 +1811,34 @@ Think of a toolkit you attach to different kinds of machines. Rather than buildi
 
 ---
 
-## Day 29 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 29 – Decorator Pattern
+**📅 Date:** 2025-09-29
+**📂 Category:** Design Patterns (Extended)
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary
+
+The Decorator Pattern is a structural design pattern that allows behavior to be added to individual objects dynamically, without affecting the behavior of other objects from the same class.
+
+### 💡 Problem It Solves:
+Instead of creating multiple subclasses for every possible combination of features, decorators provide a flexible alternative that allows extending functionality at runtime.
+
+### Example (Patterns.dev):
+- ❌ Not officially covered.
+- ✅ This is an Extended Design Pattern included for completeness.
+
+**🌎 Real-world analogy:**
+- Think of ordering coffee at a café. You start with a base drink (espresso), then decorate it with add-ons like milk, whipped cream, or flavor syrups. Each add-on changes the final drink without needing a new “CoffeeWithMilkAndSyrup” subclass.
+
+**✅ Pros & Cons ❌:**
+
+**✅ Pros:**
+- Promotes flexibility over inheritance.
+- Supports runtime behavior changes.
+- Reduces subclass explosion.
+
+**❌ Cons:**
+- Can lead to many small objects in complex systems.
+- Debugging decorated layers may be harder to trace.
 
 ---
 
