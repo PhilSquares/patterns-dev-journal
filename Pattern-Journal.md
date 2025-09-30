@@ -1842,16 +1842,35 @@ Instead of creating multiple subclasses for every possible combination of featur
 
 ---
 
-## Day 30 – Pattern Name
-**Date:** YYYY-MM-DD  
-**Category:** Rendering / Performance / Design  
+## Day 30 – MVC / MVVM in Modern Frameworks
+**📅 Date:** 2025-09-30  
+**📂 Category:** Design Patterns (Extended) 
 
-### Pattern Summary  
-- Problem it solves:
-- Example from Patterns.dev:
-- Example from a real-world project:
-- Pros & cons:
+### 📖 Pattern Summary – MVC & MVVM  
+
+**💡 Problem It Solves:**  
+Applications grow complex as they handle user input, business logic, and UI updates. Without structure, everything gets tangled, leading to unmaintainable “spaghetti code.” **MVC (Model-View-Controller)** and **MVVM (Model-View-ViewModel)** provide ways to **separate concerns** and establish clear roles in application architecture.
+
+**Example (Patterns.dev):**  
+Not directly covered, but heavily referenced in modern frameworks like **React, Angular, Vue, .NET, and iOS development**.  
+
+**🌎 Real-world analogy:**  
+Think of a **restaurant kitchen**:  
+- The **Model** is the recipe + ingredients (data).  
+- The **Controller/ViewModel** is the chef preparing dishes based on orders (logic).  
+- The **View** is the waiter presenting the finished meal to customers (UI).  
+
+**✅ Pros & Cons ❌:**  
+
+**✅ Pros:**  
+- Clear separation of concerns  
+- Easier testing (logic separated from UI)  
+- Improves maintainability and scalability  
+- Common, well-known architecture (industry standard)  
+
+**❌ Cons:**  
+- Can feel verbose for small/simple apps  
+- Overhead in managing extra layers  
+- Some blurred lines between responsibilities (esp. between Controller/View or View/ViewModel in practice)  
 
 ---
-
-<!-- Continue for all 30 days -->
